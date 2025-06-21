@@ -23,7 +23,8 @@ export default function App() {
 
 function ScrollPicker({ date, hour, minute, timeFormat }) {
   const hours = Array.from({ length: 12 }, (_, i) => i + 1)
-  const minutes = Array.from({length: 13}, (_, i) => i * 5)
+  const minutes = Array.from({ length: 13 }, (_, i) => i * 5)
+  const formats = ["AM", "PM"]
   return (
     <div className="scroll-picker-container">
       <div className="picker-row">
@@ -41,7 +42,12 @@ function ScrollPicker({ date, hour, minute, timeFormat }) {
               {m}
             </div>
           ))}</div>
-        <div className="picker-column">{ timeFormat }</div>
+        <div className="picker-column">
+          {formats.map((f) => 
+            <div key={f} className={`picker-item ${timeFormat === f ? 'active' : ''}`}>
+              {f}
+            </div>
+          )}</div>
       </div>
       <button className="submit-button">Submit</button>
     </div>
