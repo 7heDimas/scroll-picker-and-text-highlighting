@@ -1,6 +1,72 @@
-body {
-  font-family: sans-serif;
-  margin: 0;
+.app-container {
+  text-align: center;
+  padding: 20px;
+  font-family: Arial, sans-serif;
+}
+
+.header-text {
+  font-size: 24px;
+  margin-bottom: 20px;
+}
+
+.scroll-picker-container {
+  position: relative;
+  max-width: 100%;
+  margin: 0 auto;
+  display: inline-block;
+}
+
+.picker-row {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 20px;
+  overflow-x: auto;
+}
+
+.picker-column {
+  width: 120px;
+  height: 200px;
+  overflow-y: scroll;
+  scroll-snap-type: y mandatory;
+  scrollbar-width: none;
+}
+
+.picker-item {
+  height: 40px;
+  line-height: 40px;
   padding: 0;
-  background: #f9f9f9;
+  text-align: center;
+  scroll-snap-align: center;
+  cursor: pointer;
+}
+
+.picker-item.active {
+  font-weight: bold;
+}
+
+.submit-button {
+  padding: 10px 20px;
+  font-size: 14px;
+  border: none;
+  background-color: #28a745;
+  color: white;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.submit-button:hover {
+  background-color: #218838;
+}
+
+.picker-highlight {
+  position: absolute;
+  top: 38%;
+  left: 0;
+  right: 0;
+  height: 40px;
+  margin-top: -20px;
+  border-top: 1px solid #c7c6c6;
+  border-bottom: 1px solid #c7c6c6;
+  pointer-events: none;
+  z-index: 10;
 }
