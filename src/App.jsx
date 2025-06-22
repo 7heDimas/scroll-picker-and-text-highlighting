@@ -22,13 +22,32 @@ export default function App() {
 }
 
 function ScrollPicker({ date, hour, minute, timeFormat }) {
+  const dates = Array.from({ length: 60 }, (_, i) => {
+    const date = new Date();
+    date.setDate(date.getDate() + i);
+
+      if (i === 0) return "today";
+  
+      return date.toLocaleDateString("en-US", {
+        weekday: "short",
+        month: "short",
+        day: "2-digit",
+      });
+
+  });
   const hours = Array.from({ length: 12 }, (_, i) => i + 1)
   const minutes = Array.from({ length: 13 }, (_, i) => i * 5)
   const formats = ["AM", "PM"]
   return (
     <div className="scroll-picker-container">
       <div className="picker-row">
-        <div className="picker-column">{ date }</div>
+        <div className="picker-column">
+          {dates.map((d) => (
+            <div key={d} className={`picker-item ${date === d ? 'active' : ''}`}>
+              {d}
+            </div>
+          ))}
+        </div>
         <div className="picker-column">
           {hours.map((h) => (
             <div key={h} className={`picker-item ${Number(hour) === h ? 'active' : ''}`}>
