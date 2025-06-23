@@ -24,6 +24,11 @@ function ScrollPicker({ date, hour, minute, timeFormat }) {
     const [selectedMinute, setSelectedMinute] = useState(Number(minute) || 0);
     const [selectedFormat, setSelectedFormat] = useState(timeFormat || "AM");
 
+  const handleSubmit = () => {
+    console.log("Selected Date: ", selectedDate);
+    console.log("Selected Time: ", selectedHour + ":" + (selectedMinute < 10 ? "0" + selectedMinute : selectedMinute) + " " + selectedFormat);
+    }
+  
     return (
     <div className="scroll-picker-container">
       <div className="picker-overlay"></div>
@@ -35,7 +40,7 @@ function ScrollPicker({ date, hour, minute, timeFormat }) {
         <PickerColumn items={formats} selected={selectedFormat} onSelect={setSelectedFormat} />
       </div>
   
-      <button className="submit-button">Submit</button>
+      <button className="submit-button" onClick={handleSubmit}>Submit</button>
     </div>
   );
 }

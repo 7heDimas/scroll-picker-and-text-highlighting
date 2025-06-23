@@ -18,8 +18,8 @@
 
 .picker-row {
   display: flex;
-  gap: 10px;
-  margin-bottom: 20px;
+  flex-wrap: nowrap;
+  justify-content: center;
   overflow-x: auto;
 }
 
@@ -29,6 +29,13 @@
   overflow-y: scroll;
   scroll-snap-type: y mandatory;
   scrollbar-width: none;
+  -webkit-overflow-scrolling: touch;
+  touch-action: pan-y;
+  overscroll-behavior: contain;
+}
+
+.picker-column::-webkit-scrollbar {
+  display: none;
 }
 
 .picker-item {
@@ -69,4 +76,18 @@
   border-bottom: 1px solid #c7c6c6;
   pointer-events: none;
   z-index: 10;
+}
+
+@media (max-width: 768px) {
+  .picker-column {
+    width: 80px;
+  }
+
+  .picker-item {
+    font-size: 14px;
+  }
+
+  .submit-button {
+    width: 100%;
+  }
 }
