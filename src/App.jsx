@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from "react";
+import React from "react";
 import { useSearchParams } from "react-router-dom";
 import ScrollPicker from "./components/ScrollPicker";
 import TextHighlighter from "./components/TextHighlighter";

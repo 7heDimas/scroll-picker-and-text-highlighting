@@ -16,7 +16,7 @@ function ScrollPicker({ date, hour, minute, timeFormat, onChange }) {
     });
     
     const hours = Array.from({ length: 12 }, (_, i) => i + 1)
-    const minutes = Array.from({ length: 13 }, (_, i) => i * 5)
+    const minutes = Array.from({ length: 12 }, (_, i) => i * 5)
     const formats = ["AM", "PM"]
 
     const [selectedDate, setSelectedDate] = useState(date || "Today");

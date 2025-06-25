@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 
 function TextHighlighter() {
     const [text, setText] = useState("");
@@ -22,7 +22,6 @@ function TextHighlighter() {
             className="text-highlighter-textarea"
             />
             <div className="text-highlighter-output">
-                <p className="text-highlighter-label">Non latin chars: </p>
                 <div className="text-highlighter-result">
                     {[...text].map((ch, i) => {
                     if (isNonLatinChar(ch)) {
