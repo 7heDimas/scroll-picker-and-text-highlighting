@@ -1,6 +1,7 @@
 import React, { useEffect, useRef } from "react";
 import { useSearchParams } from "react-router-dom";
 import ScrollPicker from "./components/ScrollPicker";
+import TextHighlighter from "./components/TextHighlighter";
 
 export default function App() {
   const [searchParams] = useSearchParams();
@@ -25,6 +26,8 @@ export default function App() {
         timeFormat={timeFormat}
         onChange={handleChange}
       />
+      <TextHighlighter />
     </div>
+
   );
 }
