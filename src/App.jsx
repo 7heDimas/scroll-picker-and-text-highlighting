@@ -12,8 +12,8 @@ export default function App() {
   const timeFormat = searchParams.get("AM/PM");
 
   const handleChange = (selectedDate, selectedHour, selectedMinute, selectedFormat) => {
-  console.log("Selected Date: ", selectedDate);
-  console.log("Selected Time: ", selectedHour + ":" + (selectedMinute < 10 ? "0" + selectedMinute : selectedMinute) + " " + selectedFormat);
+    console.log("Selected Date: ", selectedDate);
+    console.log(`Selected Time: ${selectedHour}:${selectedMinute < 10 ? "0" + selectedMinute : selectedMinute} ${selectedFormat}`);
   }
   
   return (
