@@ -1,10 +1,7 @@
 import React, { useState, useEffect } from "react";
-import { useSearchParams } from "react-router-dom";
 
 function TextHighlighter() {
-    const [searchParams] = useSearchParams();
-    const initialText = searchParams.get(("text") || "");
-    const [text, setText] = useState(initialText);
+    const [text, setText] = useState("");
 
     const latinChars = [
         ..."abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789",
@@ -15,19 +12,26 @@ function TextHighlighter() {
         return !latinChars.includes(char);
     }
 
-    const nonLatinChars = [...text].filter(isNonLatinChar);
-
     return (
-        <div>
+        <div className="text-highlighter">
             <textarea
             row={5}
             cols={40}
-                value={text}
-                onChange={(e) => setText(e.target.value)}
+            value={text}
+            onChange={(e) => setText(e.target.value)}
+            className="text-highlighter-textarea"
             />
-            <div>
-                <p>Non latin chars: </p>
-                <div>{nonLatinChars.join("")}</div>
+            <div className="text-highlighter-output">
+                <p className="text-highlighter-label">Non latin chars: </p>
+                <div className="text-highlighter-result">
+                    {[...text].map((ch, i) => {
+                    if (isNonLatinChar(ch)) {
+                        return <span key={i} className="highlight">{ch}</span>;
+                    } else {
+                        return <span key={i}>{ch}</span>
+                    }
+                })}
+                </div>
             </div>
         </div>
     )
