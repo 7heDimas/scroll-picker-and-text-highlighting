@@ -9,6 +9,12 @@ export default function App() {
   const hour = searchParams.get("hour");
   const minute = searchParams.get("minute");
   const timeFormat = searchParams.get("AM/PM");
+
+  const handleChange = (selectedDate, selectedHour, selectedMinute, selectedFormat) => {
+  console.log("Selected Date: ", selectedDate);
+  console.log("Selected Time: ", selectedHour + ":" + (selectedMinute < 10 ? "0" + selectedMinute : selectedMinute) + " " + selectedFormat);
+  }
+  
   return (
     <div className="app-container">
       <h1 className="header-text">Scroll picker and Text highlighting</h1>
@@ -17,6 +23,7 @@ export default function App() {
         hour={hour}
         minute={minute}
         timeFormat={timeFormat}
+        onChange={handleChange}
       />
     </div>
   );

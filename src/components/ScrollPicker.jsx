@@ -1,7 +1,7 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import PickerColumn from "./PickerColumn";
 
-function ScrollPicker({ date, hour, minute, timeFormat }) {
+function ScrollPicker({ date, hour, minute, timeFormat, onChange }) {
     const dates = Array.from({ length: 60 }, (_, i) => {
         if (i === 0) return "Today";
       
@@ -23,11 +23,12 @@ function ScrollPicker({ date, hour, minute, timeFormat }) {
     const [selectedHour, setSelectedHour] = useState(Number(hour) || 1);
     const [selectedMinute, setSelectedMinute] = useState(Number(minute) || 0);
     const [selectedFormat, setSelectedFormat] = useState(timeFormat || "AM");
-
-  const handleSubmit = () => {
-    console.log("Selected Date: ", selectedDate);
-    console.log("Selected Time: ", selectedHour + ":" + (selectedMinute < 10 ? "0" + selectedMinute : selectedMinute) + " " + selectedFormat);
-    }
+  
+  useEffect(() => {
+      if (onChange) {
+        onChange(selectedDate, selectedHour, selectedMinute, selectedFormat);
+      }
+    }, [selectedDate, selectedHour, selectedMinute, selectedFormat, onChange])
   
     return (
     <div className="scroll-picker-container">
@@ -40,7 +41,13 @@ function ScrollPicker({ date, hour, minute, timeFormat }) {
         <PickerColumn items={formats} selected={selectedFormat} onSelect={setSelectedFormat} />
       </div>
   
-      <button className="submit-button" onClick={handleSubmit}>Submit</button>
+        <button className="submit-button" onClick={() => {
+          if (onChange) {
+            onChange(selectedDate, selectedHour, selectedMinute, selectedFormat);
+          }
+        }}>
+          Submit
+        </button>
     </div>
   );
 }
