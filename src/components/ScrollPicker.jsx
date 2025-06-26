@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import PickerColumn from "./PickerColumn";
 
 function ScrollPicker({ date, hour, minute, timeFormat, onChange }) {
@@ -20,15 +20,10 @@ function ScrollPicker({ date, hour, minute, timeFormat, onChange }) {
     const formats = ["AM", "PM"]
 
     const [selectedDate, setSelectedDate] = useState(date || "Today");
-    const [selectedHour, setSelectedHour] = useState(Number(hour) || 1);
-    const [selectedMinute, setSelectedMinute] = useState(Number(minute) || 0);
+    const [selectedHour, setSelectedHour] = useState(Number(hour) || 4);
+    const [selectedMinute, setSelectedMinute] = useState(Number(minute) || 20);
     const [selectedFormat, setSelectedFormat] = useState(timeFormat || "AM");
   
-  useEffect(() => {
-      if (onChange) {
-        onChange(selectedDate, selectedHour, selectedMinute, selectedFormat);
-      }
-    }, [selectedDate, selectedHour, selectedMinute, selectedFormat, onChange])
   
     return (
     <div className="scroll-picker-container">
