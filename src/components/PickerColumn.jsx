@@ -59,7 +59,7 @@ function PickerColumn({ items, selected, onSelect }) {
 
       {items.map((item, index) => (
         <div
-          key={item}
+          key={`${item}-${index}`}
           ref={(el) => (itemRefs.current[index] = el)}
           className={`picker-item ${item === selected ? "active" : ""}`}
           onClick={() => onSelect(item)}
