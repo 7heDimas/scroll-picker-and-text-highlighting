@@ -6,10 +6,35 @@ import TextHighlighter from "./components/TextHighlighter";
 export default function App() {
   const [searchParams] = useSearchParams();
 
-  const date = searchParams.get("Date");
-  const hour = searchParams.get("hour");
-  const minute = searchParams.get("minute");
-  const timeFormat = searchParams.get("AM/PM");
+  const dateParam = searchParams.get("date");
+  let date = "Today";
+  let hour = 4;
+  let minute = 20;
+  let format = "AM";
+
+  if (dateParam) {
+    const parsed = new Date(dateParam);
+    if (!isNaN(parsed)) {
+      const today = new Date();
+      const isToday =
+        parsed.getFullYear() === today.getFullYear() &&
+        parsed.getMonth() === today.getMonth() &&
+        parsed.getDate() === today.getDate();
+  
+      date = isToday
+        ? "Today"
+        : parsed.toLocaleDateString("en-US", {
+            weekday: "short",
+            month: "short",
+            day: "2-digit",
+          });
+  
+      let rawHour = parsed.getHours();
+      format = rawHour >= 12 ? "PM" : "AM";
+      hour = rawHour % 12 || 12;
+      minute = Math.round(parsed.getMinutes() / 5) * 5;
+    }
+  }
 
   const handleChange = (selectedDate, selectedHour, selectedMinute, selectedFormat) => {
     console.log("Selected Date: ", selectedDate);
@@ -23,7 +48,7 @@ export default function App() {
         date={date}
         hour={hour}
         minute={minute}
-        timeFormat={timeFormat}
+        timeFormat={format}
         onChange={handleChange}
       />
       <TextHighlighter />
