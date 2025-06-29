@@ -1,9 +1,12 @@
-import React, { useRef, useEffect } from "react";
+import React, { useRef, useEffect, useState } from "react";
 
 function PickerColumn({ items, selected, onSelect }) {
   const itemRefs = useRef([]);
   const containerRef = useRef(null);
 
+  const [isDragging, setIsDragging] = useState(false);
+  const dragStartY = useRef(0);
+  const scrollStartTop = useRef(0);
 
   useEffect(() => {
     const index = items.findIndex((item) => item === selected);
@@ -14,7 +17,6 @@ function PickerColumn({ items, selected, onSelect }) {
       });
     }
   }, [selected, items]);
-
 
   useEffect(() => {
     const container = containerRef.current;
@@ -53,8 +55,55 @@ function PickerColumn({ items, selected, onSelect }) {
     return () => container.removeEventListener("scroll", handleScroll);
   }, [items, selected, onSelect]);
 
+  const onStart = (clientY) => {
+    setIsDragging(true);
+    dragStartY.current = clientY;
+    scrollStartTop.current = containerRef.current.scrollTop;
+  };
+
+  const onMove = (clientY) => {
+    if (!isDragging) return;
+    const deltaY = dragStartY.current - clientY;
+    containerRef.current.scrollTop = scrollStartTop.current + deltaY;
+  };
+
+  const onEnd = () => {
+    setIsDragging(false);
+    containerRef.current.dispatchEvent(new Event("scroll"));
+  };
+
+  const handleMouseDown = (e) => onStart(e.clientY);
+  const handleMouseMove = (e) => onMove(e.clientY);
+  const handleMouseUp = () => onEnd();
+
+  const handleTouchStart = (e) => onStart(e.touches[0].clientY);
+  const handleTouchMove = (e) => onMove(e.touches[0].clientY);
+  const handleTouchEnd = () => onEnd();
+
+  useEffect(() => {
+    const container = containerRef.current;
+    if (!container) return;
+
+    container.addEventListener("mousemove", handleMouseMove);
+    container.addEventListener("mouseup", handleMouseUp);
+    container.addEventListener("touchmove", handleTouchMove);
+    container.addEventListener("touchend", handleTouchEnd);
+
+    return () => {
+      container.removeEventListener("mousemove", handleMouseMove);
+      container.removeEventListener("mouseup", handleMouseUp);
+      container.removeEventListener("touchmove", handleTouchMove);
+      container.removeEventListener("touchend", handleTouchEnd);
+    };
+  }, [isDragging]);
+
   return (
-    <div className="picker-column" ref={containerRef}>
+    <div
+      className="picker-column"
+      ref={containerRef}
+      onMouseDown={handleMouseDown}
+      onTouchStart={handleTouchStart}
+    >
       <div style={{ height: "80px" }}></div>
 
       {items.map((item, index) => (
